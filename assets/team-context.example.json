@@ -2,6 +2,14 @@
   "schema_version": 1,
   "status": "example_only",
   "workspace_root": null,
+  "local_indexes": {
+    "docs": null,
+    "figma": null,
+    "slack": null,
+    "reference": null,
+    "code": null,
+    "infra": null
+  },
   "current_goal": null,
   "role_assignments": {
     "direction_and_research": [],

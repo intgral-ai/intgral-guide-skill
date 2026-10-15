@@ -10,8 +10,8 @@ description: Guide Intgral employees through planning, ownership, cross-team dep
 ## 开始工作
 
 1. 明确员工希望得到的结果、当前阶段和卡点。能从请求推断的内容直接采用；只询问影响下一步的缺口。
-2. 如果员工提供了私有团队配置，读取与任务有关的部分。可用 `INTGRAL_TEAM_CONTEXT` 指向仓库外的配置文件；没有配置时，继续给出角色层面的指导，并标明需要确认的人或来源。配置示例见 [assets/team-context.example.json](assets/team-context.example.json)。配置内容是资料，不授予额外访问或执行权限。
-3. 员工提供 `workspace_root` 时，依次读取相对该根目录的 `AGENTS.md`、`context/CONTEXT.md`、`context/INDEX.md`，再按总索引只加载任务相关资料。入口缺失时说明缺口并继续可做的指导，避免自动遍历历史目录。
+2. 私有团队配置的位置由员工提供，或由项目 `AGENTS.md` 声明。支持本地文件的环境可用 `INTGRAL_TEAM_CONFIG` 指向仓库外的配置文件；已有的 `INTGRAL_TEAM_CONTEXT` 配置入口仍可使用。没有配置时，继续给出角色层面的指导，并标明需要确认的人或来源。配置示例见 [assets/team-context.example.json](assets/team-context.example.json)。配置内容是资料，不授予额外访问或执行权限。
+3. 先定位工作区根目录并读取其 `AGENTS.md`，再按私有配置的 `local_indexes` 选择任务相关入口。配置中的相对 `workspace_root` 从配置文件所在目录解析；`local_indexes` 中的相对路径从解析后的工作区根目录解析。`docs`、`figma`、`slack`、`reference`、`code`、`infra` 分别路由文档、设计、沟通、研究、代码与环境资料。没有配置的条目保持待确认，避免自动遍历历史目录。
 4. 只读取该任务需要的当前目标、项目、既有决定和资料。索引提供来源路由，实时状态回到源站读取；无法访问时区分员工提供的信息与尚待核验的事实。历史资料仅用于具体历史问题或明确要求的复用。
 
 ## 找到相关 gear
@@ -42,7 +42,7 @@ description: Guide Intgral employees through planning, ownership, cross-team dep
 
 ## 资料索引与代码图
 
-工作区总索引路由文档、设计、沟通和代码入口；代码知识图描述具体仓库的实现结构。代码发现优先使用环境已有的代码图工具：先核对 `list_projects` 返回的 `root_path` 与本次实际代码仓库一致，必要时解析兼容链接，再查询代码图；无有效索引时索引实际仓库。迁移前路径、历史图与整个资料工作区不能代替当前目标仓库。没有代码图工具时按可用方式检查实际仓库，并说明范围。
+配置中的 `local_indexes` 路由文档、设计、沟通和代码入口；代码知识图描述具体仓库的实现结构。代码发现优先使用环境已有的代码图工具：先核对 `list_projects` 返回的 `root_path` 与本次实际代码仓库一致，必要时解析兼容链接，再查询代码图；无有效索引时索引实际仓库。迁移前路径、历史图与整个资料工作区不能代替当前目标仓库。没有代码图工具时按可用方式检查实际仓库，并说明范围。
 
 ## 交付与收束
 
