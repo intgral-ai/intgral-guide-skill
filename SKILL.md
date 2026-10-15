@@ -1,11 +1,11 @@
 ---
-name: intgral-management-skill
-description: Guide Intgral employees through planning, ownership, cross-team dependencies, decisions, and handoffs using the team's existing tools. Use for internal management and coordination requests; load current company facts from authorized private context.
+name: intgral-index-skill
+description: Help Intgral employees find relevant sources, understand relationships between team roles and tools, and identify the next action. Use for workspace navigation, source discovery, ownership, dependencies, planning and handoffs; load current company facts from authorized private sources.
 ---
 
-# Intgral Management
+# Intgral Index
 
-员工描述要推进的工作后，帮助他们理解公司各个 gear 如何配合，找到下一步行动。按员工的语言回答。当前目标、成员、客户、内部地址和审批人从获授权的私有资料读取；本包只保存协作方法。
+员工描述要推进的工作后，先找到有关资料，再解释公司各个 gear 如何配合，给出下一步行动。按员工的语言回答。当前目标、成员、客户、内部地址和审批人从获授权的私有资料读取；本包保存索引规则与协作方法。
 
 ## 开始工作
 

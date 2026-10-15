@@ -115,7 +115,7 @@ def validate(root):
             errors.append('SKILL.md: missing frontmatter')
         else:
             fields = dict(line.split(':', 1) for line in match[1].splitlines() if ':' in line)
-            if fields.get('name', '').strip() != 'intgral-management-skill' or not fields.get('description', '').strip():
+            if fields.get('name', '').strip() != 'intgral-index-skill' or not fields.get('description', '').strip():
                 errors.append('SKILL.md: invalid name or description')
     if (root / 'assets/team-context.example.json').exists():
         try:
