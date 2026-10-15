@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "example_only",
+  "workspace_root": null,
+  "current_goal": null,
+  "role_assignments": {
+    "direction_and_research": [],
+    "research_data_and_validation": [],
+    "commercial": [],
+    "customer_relationships": [],
+    "technical_coordination": [],
+    "engineering": [],
+    "product_design": []
+  },
+  "sources": {
+    "documentation_home": "https://docs.intgral.ai",
+    "figma_design_system": null,
+    "figma_approved_design": null,
+    "slack_workspace": null,
+    "linear_workspace": null,
+    "drive_folder": null,
+    "code_repositories": []
+  },
+  "approval_rules_source": null,
+  "verified_at": null
+}

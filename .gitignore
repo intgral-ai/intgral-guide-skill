@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.env.*
+*.local.*
+*.private.*
+team-context.json
+private/
+exports/
+__pycache__/
+*.pyc
+.venv/

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Intgral Management"
+  short_description: "Guide team ownership, dependencies, decisions and handoffs"
+  default_prompt: "Use $intgral-management-skill to help me identify the next action, relevant roles, source material and completion criteria for this work."
