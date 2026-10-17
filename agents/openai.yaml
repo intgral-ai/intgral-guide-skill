@@ -1,4 +1,4 @@
 interface:
-  display_name: "Intgral Management"
-  short_description: "Guide team ownership, dependencies, decisions and handoffs"
-  default_prompt: "Use $intgral-management-skill to help me identify the next action, relevant roles, source material and completion criteria for this work."
+  display_name: "Intgral 团队工作指南"
+  short_description: "查找团队资料、整理会议与进展，连接决策、负责人和下一步行动"
+  default_prompt: "Use $intgral-team-guide to find relevant sources, connect updates and meeting records to decisions, and identify related roles, dependencies, next actions and completion criteria."
