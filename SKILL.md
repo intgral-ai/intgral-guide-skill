@@ -1,9 +1,9 @@
 ---
-name: intgral-team-guide
+name: intgral-guide-skill
 description: Help Intgral team members find sources, connect roles and tools, and identify the next action. Use for workspace navigation, planning, handoffs, meeting records, daily updates and evidence-based decision preparation; load current company facts from authorized private sources.
 ---
 
-# Intgral 团队工作指南
+# intgral-guide-skill
 
 成员描述要推进的工作后，先找到有关资料，再解释公司各个 gear 如何配合，给出下一步行动。按成员的语言回答。当前目标、成员、客户、内部地址和审批人从获授权的私有资料读取；本包保存查找资料和团队协作的方法。团队事实更新到私有配置或来源系统；本 skill 只在工作方法改变时维护。
 

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Intgral 团队工作指南"
+  display_name: "intgral-guide-skill"
   short_description: "查找团队资料、整理会议与进展，连接决策、负责人和下一步行动"
-  default_prompt: "Use $intgral-team-guide to find relevant sources, connect updates and meeting records to decisions, and identify related roles, dependencies, next actions and completion criteria."
+  default_prompt: "Use $intgral-guide-skill to find relevant sources, connect updates and meeting records to decisions, and identify related roles, dependencies, next actions and completion criteria."
