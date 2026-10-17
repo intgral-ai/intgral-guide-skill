@@ -1,9 +1,9 @@
 import importlib.util
 import json
-import shutil
 import subprocess
 import tempfile
 import unittest
+import shutil
 from pathlib import Path
 
 spec = importlib.util.spec_from_file_location('publication_guard', Path(__file__).resolve().parents[1] / 'scripts/validate.py')

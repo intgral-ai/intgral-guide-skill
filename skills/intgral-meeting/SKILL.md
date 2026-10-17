@@ -10,7 +10,7 @@ description: Read Wispr Flow meetings, My thoughts and scratchpad notes, reconci
 ## 接入与范围
 
 1. 使用当前成员自己的 Wispr Flow 连接器。本包的 plugin manifest 将 Wispr 列为必需 app；仅复制 skill 的客户端仍需单独连接 Wispr。缺少连接时提供连接入口和具体缺口，可继续准备文档结构；不要要求复制令牌或代用另一成员的账号。工具名称以运行时发现结果为准，见 [Wispr 读取规则](references/wispr.md)。
-2. 读取用户提供的私有配置，或 `INTGRAL_TEAM_CONTEXT` 指向的文件；项目明确指定配置时沿用它。读取 `workspace_root` 下的 `AGENTS.md`，通过 `local_indexes` 定位任务需要的来源。相对根目录从配置文件目录解析，索引路径从工作区根目录解析。没有配置时只询问目标档案位置、范围或时区等影响执行的缺口，不猜测真实成员和内部 URL。
+2. 读取用户提供的私有配置，或 `INTGRAL_TEAM_CONFIG` 指向的文件，兼容原有 `INTGRAL_TEAM_CONTEXT` 入口；项目明确指定配置时沿用它。读取 `workspace_root` 下的 `AGENTS.md`，通过 `local_indexes` 定位任务需要的来源。相对根目录从配置文件目录解析，索引路径从工作区根目录解析。没有配置时只询问目标档案位置、范围或时区等影响执行的缺口，不猜测真实成员和内部 URL。
 3. 优先沿用 `collaboration_policy.meeting_archive`、`automation_execution`、`daily_logs`、`decision_making` 和当前确认记录。最少需要归档目标、时区、来源范围与起始边界、私有状态文件位置。路径与数据留在私有工作区，配置不扩大权限。
 4. 判断本次结果：仅回顾、写回会议，或还要 top-down 更新。用户只说“更新 meeting”时完成会议归档与有关日志；只有明确要求或现有持续授权涵盖时才修改产品/MVP/engineering。不要因安装 skill 新建定时任务、启用其他录音源、发送团队广播或修改 Linear。
 
