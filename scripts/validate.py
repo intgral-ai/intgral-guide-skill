@@ -115,13 +115,13 @@ def validate(root):
             errors.append('SKILL.md: missing frontmatter')
         else:
             fields = dict(line.split(':', 1) for line in match[1].splitlines() if ':' in line)
-            if fields.get('name', '').strip() != 'intgral-index-skill' or not fields.get('description', '').strip():
+            if fields.get('name', '').strip() != 'intgral-guide-skill' or not fields.get('description', '').strip():
                 errors.append('SKILL.md: invalid name or description')
     if (root / 'assets/team-context.example.json').exists():
         try:
             example = json.loads((root / 'assets/team-context.example.json').read_text())
             if (example['status'] != 'example_only' or example['workspace_root'] is not None or example['current_goal'] is not None
-                    or not isinstance(example['local_indexes'], dict) or any(example['local_indexes'].values())
+                    or not isinstance(example.get('local_indexes'), dict) or any(example['local_indexes'].values())
                     or any(example['role_assignments'].values())
                     or example['approval_rules_source'] is not None or example['verified_at'] is not None
                     or any(value for key, value in example['sources'].items() if key != 'documentation_home')

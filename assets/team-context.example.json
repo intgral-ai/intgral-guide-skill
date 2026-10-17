@@ -3,12 +3,12 @@
   "status": "example_only",
   "workspace_root": null,
   "local_indexes": {
-    "docs": null,
-    "figma": null,
-    "slack": null,
-    "reference": null,
+    "documentation": null,
+    "design": null,
+    "communication": null,
+    "research": null,
     "code": null,
-    "infra": null
+    "infrastructure": null
   },
   "current_goal": null,
   "role_assignments": {
@@ -22,6 +22,11 @@
   },
   "sources": {
     "documentation_home": "https://docs.intgral.ai",
+    "team_workflow_document": null,
+    "meeting_collection": null,
+    "meeting_archive_rules_document": null,
+    "meeting_source_accounts": null,
+    "decision_template_document": null,
     "figma_design_system": null,
     "figma_approved_design": null,
     "slack_workspace": null,
@@ -29,6 +34,7 @@
     "drive_folder": null,
     "code_repositories": []
   },
+  "collaboration_policy": null,
   "approval_rules_source": null,
   "verified_at": null
 }

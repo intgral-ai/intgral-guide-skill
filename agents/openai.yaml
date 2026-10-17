@@ -1,4 +1,4 @@
 interface:
-  display_name: "Intgral Index"
-  short_description: "Find team sources, related roles and the next action"
-  default_prompt: "Use $intgral-index-skill to find relevant sources and help me identify the next action, related roles, dependencies and completion criteria for this work."
+  display_name: "intgral-guide-skill"
+  short_description: "查找团队资料、整理会议与进展，连接决策、负责人和下一步行动"
+  default_prompt: "Use $intgral-guide-skill to find relevant sources, connect updates and meeting records to decisions, and identify related roles, dependencies, next actions and completion criteria."

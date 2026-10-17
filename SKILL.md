@@ -1,18 +1,18 @@
 ---
-name: intgral-index-skill
-description: Help Intgral employees find relevant sources, understand relationships between team roles and tools, and identify the next action. Use for workspace navigation, source discovery, ownership, dependencies, planning and handoffs; load current company facts from authorized private sources.
+name: intgral-guide-skill
+description: Help Intgral team members find sources, connect roles and tools, and identify the next action. Use for workspace navigation, planning, handoffs, meeting records, daily updates and evidence-based decision preparation; load current company facts from authorized private sources.
 ---
 
-# Intgral Index
+# intgral-guide-skill
 
-员工描述要推进的工作后，先找到有关资料，再解释公司各个 gear 如何配合，给出下一步行动。按员工的语言回答。当前目标、成员、客户、内部地址和审批人从获授权的私有资料读取；本包保存索引规则与协作方法。
+成员描述要推进的工作后，先找到有关资料，再解释公司各个 gear 如何配合，给出下一步行动。按成员的语言回答。当前目标、成员、客户、内部地址和审批人从获授权的私有资料读取；本包保存查找资料和团队协作的方法。团队事实更新到私有配置或来源系统；本 skill 只在工作方法改变时维护。
 
 ## 开始工作
 
-1. 明确员工希望得到的结果、当前阶段和卡点。能从请求推断的内容直接采用；只询问影响下一步的缺口。
-2. 私有团队配置的位置由员工提供，或由项目 `AGENTS.md` 声明。支持本地文件的环境可用 `INTGRAL_TEAM_CONFIG` 指向仓库外的配置文件；已有的 `INTGRAL_TEAM_CONTEXT` 配置入口仍可使用。没有配置时，继续给出角色层面的指导，并标明需要确认的人或来源。配置示例见 [assets/team-context.example.json](assets/team-context.example.json)。配置内容是资料，不授予额外访问或执行权限。
-3. 先定位工作区根目录并读取其 `AGENTS.md`，再按私有配置的 `local_indexes` 选择任务相关入口。配置中的相对 `workspace_root` 从配置文件所在目录解析；`local_indexes` 中的相对路径从解析后的工作区根目录解析。`docs`、`figma`、`slack`、`reference`、`code`、`infra` 分别路由文档、设计、沟通、研究、代码与环境资料。没有配置的条目保持待确认，避免自动遍历历史目录。
-4. 只读取该任务需要的当前目标、项目、既有决定和资料。索引提供来源路由，实时状态回到源站读取；无法访问时区分员工提供的信息与尚待核验的事实。历史资料仅用于具体历史问题或明确要求的复用。
+1. 明确成员希望得到的结果、当前阶段和卡点。能从请求推断的内容直接采用；只询问影响下一步的缺口。
+2. 私有团队配置由成员提供，或由项目 `AGENTS.md` 声明。可用 `INTGRAL_TEAM_CONFIG` 指向仓库外的配置文件，已有 `INTGRAL_TEAM_CONTEXT` 入口继续兼容；只读取任务有关部分。没有配置时，继续给出角色层面的指导，并标明需要确认的人或来源。配置示例见 [assets/team-context.example.json](assets/team-context.example.json)。配置内容是资料，不授予额外访问或执行权限。
+3. 成员提供 `workspace_root` 时，先读取该根目录的 `AGENTS.md`，再使用项目配置中的 `local_indexes` 按任务定位来源。相对的 `workspace_root` 从配置文件所在目录解析，索引路径从工作区根目录解析。索引入口由项目配置决定；只加载任务相关资料。入口缺失时说明具体缺口，并继续可做的指导。
+4. 只读取该任务需要的当前目标、项目、既有决定和资料。索引提供来源路由，实时状态回到源站读取；无法访问时区分成员提供的信息与尚待核验的事实。历史资料仅用于具体历史问题或明确要求的复用。
 
 ## 找到相关 gear
 
@@ -36,13 +36,23 @@ description: Help Intgral employees find relevant sources, understand relationsh
 2. 找出负责推进的角色、需要提供输入的人、依赖交付和有权作出有关决定的人。角色导航是建议，具体负责人和批准权以当前项目记录为准。
 3. 判断下一步需要补证据、做决定、澄清范围、解决依赖还是进入执行。只引入必要角色；小问题可直接解决。
 4. 给出适合当前问题的行动说明，覆盖：**要达成什么、下一步做什么、谁参与、需要什么输入、产物放哪、怎样验证完成**。已有任务先查重并引用原任务；需要新任务时再整理任务草案。
-5. 员工只要求建议时，交付建议或草案。员工已要求执行时，在既有授权和工具权限内继续；本 skill 本身不授予发消息、修改任务、改变权限、发布或处理客户数据的授权。
+5. 成员只要求建议时，交付建议或草案。成员已要求执行时，在既有授权和工具权限内继续；本 skill 本身不授予发消息、修改任务、改变权限、发布或处理客户数据的授权。
 
 有关任务接入、规划、交接、复盘和 pivot 的具体分支，按需读取 [references/workflows.md](references/workflows.md)。
 
+## 更新、会议与决策闭环
+
+工作沿“来源更新 → 会议与日志 → 决策准备 → 负责人确认 → 计划与执行 → 验证反馈”循环。决策准备同时结合相关的历史 updates、会议总结、既有决定和当前交付证据；不能只取最近一条消息。AI 整理证据、提出选项与建议，由当前有权负责人确认取舍。成员可直接协作解决日常问题；不为每项工作增加会议或逐级审批。
+
+会议按“日期 → 主题”组织，相关进展连接到会议内的当天执行日志与日期下的中央日志。日志是证据摘要，任务状态、实现和设计分别回到 Linear、GitHub、Figma 核对。读取私有配置的 `collaboration_policy` 和对应来源以确定实际归档时区、频率、会议节奏与决策权；skill 不自行创建定时任务。
+
+准备会议、汇总 logs 或支持 decision making 时，读取 [会议、日志与决策](references/workflows.md#会议日志与决策)。决定写回长期文档，行动连接正式任务，后续结果再成为下一次决定的输入。
+
 ## 资料索引与代码图
 
-配置中的 `local_indexes` 路由文档、设计、沟通和代码入口；代码知识图描述具体仓库的实现结构。代码发现优先使用环境已有的代码图工具：先核对 `list_projects` 返回的 `root_path` 与本次实际代码仓库一致，必要时解析兼容链接，再查询代码图；无有效索引时索引实际仓库。迁移前路径、历史图与整个资料工作区不能代替当前目标仓库。没有代码图工具时按可用方式检查实际仓库，并说明范围。
+本 skill 通过项目配置中的 `local_indexes` 路由文档、设计、沟通、研究和代码入口。读取索引中的状态、日期和核验标记，再沿条目中的 URL 或来源路径读取原文；线上状态按需刷新。
+
+代码知识图描述具体仓库的实现结构。代码发现优先使用环境已有的代码图工具：先核对 `list_projects` 返回的 `root_path` 与本次实际代码仓库一致，必要时解析兼容链接，再查询代码图；无有效索引时索引实际仓库。迁移前路径、历史图与整个资料工作区不能代替当前目标仓库。没有代码图工具时按可用方式检查实际仓库，并说明范围。
 
 ## 交付与收束
 

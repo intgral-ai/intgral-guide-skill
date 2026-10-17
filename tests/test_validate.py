@@ -48,7 +48,7 @@ class PublicationGuardTests(unittest.TestCase):
             (root / 'assets').mkdir()
             source = Path(__file__).resolve().parents[1] / 'assets/team-context.example.json'
             example = json.loads(source.read_text())
-            example['local_indexes']['docs'] = 'workspace/' + 'private-doc-index.json'
+            example['local_indexes']['documentation'] = 'workspace/' + 'private-doc-index.json'
             (root / 'assets/team-context.example.json').write_text(json.dumps(example))
             errors = guard.validate(root)
             self.assertTrue(any('must contain no real team assignments or internal sources' in e for e in errors))
