@@ -20,7 +20,7 @@ description: Run the evidence-to-decision workflow for Wispr meetings, early ide
 1. **先核对 Decision。** 在授权范围内读取已登记线程的新回复、确认、更正、未结事项及新的人工作业提交，分页读全；Team 运行器只读取经过授权的 Team 投影，不读取私密 founders 频道。记录实际读取范围、截止时间和不可读项。Decision 暂不可用时仍可保存同权限来源草稿；会改变承诺或扩大受众的发布保持 pending。
 2. **读取增量来源。** 包括 Wispr meetings、My thoughts、scratchpad，以及已登记 docs 的人工或自动修订；按 [wispr.md](references/wispr.md) 分别完整读取。先核对来源权限和归属，再归档；未知或冲突保持个人私有。
 3. **归档并更新主题。** 会议按场，想法按稳定主题；保留来源、人工内容和有效决定。来源修订只更新来源区、产生差异与待复核，不用自动 summary 覆盖人工确认。具体写回与失败续办见 [archive.md](references/archive.md)。
-4. **提交全部待确认项。** 范围、取舍、负责人、日期、验收、证据、权限、发布批准及运行缺口都进入持久 Decision 记录；一个稳定问题一条线程，重跑更新原记录。Slack 主帖只保留短问题、必要背景与下一步，审计字段留私有记录。有权限才向配置的 Decision 目的地提交最小必要内容；个人/未知权限内容留 owner 私有队列，必要时仅提交不含原文的分类请求。不得丢弃未发成功的问题。见 [decision.md](references/decision.md)。
+4. **提交全部待确认项。** 范围、取舍、负责人、日期、验收、证据、权限、发布批准及运行缺口都进入持久 Decision 记录；一个稳定问题一条线程，重跑更新原记录。Slack 主帖按“问题／解决方案／目前进度”简写，方案区分建议与已定，审计字段留私有记录。有权限才向配置的 Decision 目的地提交最小必要内容；个人/未知权限内容留 owner 私有队列，必要时仅提交不含原文的分类请求。不得丢弃未发成功的问题。见 [decision.md](references/decision.md)。
 5. **处理明确结论。** 核验确认者的实际批准范围、原话、问题修订、适用范围与来源；更新、拒绝、延期或补证据分别记录。无权确认、旧版本、含糊赞同、表情或沉默不解决问题。有关问题 pending 时继续独立且已授权的工作，不自行填上人名、预算或期限。
 6. **写回并验证。** 在原权限范围更新来源、主题、提案和有效决定。产品/MVP/engineering 仅在已授权范围更新，参见 [topdown.md](references/topdown.md)。明确执行承诺还须满足项目 work_tracking 的门槛才修改正式任务。
 7. **重大更新通知。** docs 写入并重新加载复核后，按受众通知；人工编辑也检查实质差异。普通改字无通知，已发即时更新在日报中链接而不重发。发前核对目标当前成员/权限，结果不明先查远端。见 [publication.md](references/publication.md)。
