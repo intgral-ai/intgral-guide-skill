@@ -22,6 +22,7 @@ PUBLIC_FILES = frozenset({
     'skills/intgral-knowledge-workflow/references/topdown.md',
     'skills/intgral-knowledge-workflow/references/decision.md',
     'skills/intgral-knowledge-workflow/references/slack-interface.md',
+    'skills/intgral-knowledge-workflow/references/slack-discussions.md',
     'skills/intgral-knowledge-workflow/references/permissions.md',
     'skills/intgral-knowledge-workflow/references/publication.md',
     'skills/intgral-knowledge-workflow/references/state.md',
