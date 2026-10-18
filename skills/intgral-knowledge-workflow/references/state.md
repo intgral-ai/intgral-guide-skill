@@ -22,4 +22,4 @@ prepare 输入：target、revision、hash。首次返回 write 并先保存 pend
 
 verify 输入：target、revision、hash、url、observed=true。只有实际读回一致后才能提交，版本/hash 不匹配会拒绝；更高修订不能凭低修订成功自动验证。docs、Decision thread、Slack 和任务分别使用不同 target key。
 
-每轮的 Decision 读取、成员/权限检查、跨受众批准和 payload hash 校验由 workflow 在真正写入前完成。ledger 中的 approved 仅说明该问题已确认，不能作为向 Team 发布的批准。
+每轮的 Decision 读取、成员/权限检查、跨受众批准和 payload hash 校验由 workflow 在真正写入前完成。ledger 中的 approved 仅说明该问题已确认，不能作为向 Team 发布的批准。Team 原生会议的常设授权另记 policy ID、来源分类证据、实际集合与适用范围；Founders 跨受众发布仍绑定具体版本。会议类型、完整源哈希、各受众允许输入/产物哈希及逐目标回执分别保存，个人修订不推进共享页面。

@@ -20,7 +20,7 @@ Slack 是成员的日常工作入口：召唤已接入的 agent 完成查询、�
 
 > 使用 $intgral-knowledge-workflow 执行一轮同步：先检查 Wispr 连接与读取能力，再读取 Decision 回复、归档会议与 thoughts，更新同权限主题，把全部待确认项提交到配置的决策队列；仅在明确批准范围写回并推送重大更新。
 
-私有配置需提供 docs 目标与权限、来源范围/时区、独立私密 Decision 频道与完整成员白名单、公司/团队通知目的地、实际批准权限、隔离运行身份、私有状态/outbox 路径。一个问题一条稳定线程，无变化不重复提醒。Team 运行器只读获准的 Team 决策投影，不能读取私密频道。没有有效 Decision 读取仍可保存私有草稿，但依赖确认的承诺和发布保持 pending。
+私有配置需提供 docs 目标与权限、来源范围/时区、独立私密 Decision 频道与完整成员白名单、公司/团队通知目的地、实际批准权限、隔离运行身份、私有状态/outbox 路径。一个问题一条稳定线程，无变化不重复提醒。会议按[来源分类与常设授权](skills/intgral-knowledge-workflow/references/meeting-routing.md)分流：Team 纪要进配置的全员 Meeting，Founders 会议进私有集合，个人 thoughts 仅 owner 可见；未分类先私有暂存。独立 Team 运行器只读获准投影，不能读取私密频道。没有有效 Decision 读取仍可保存私有草稿，但依赖确认的承诺和跨受众发布保持 pending。
 
 运行模式包括 dry-run、apply、verify、reconcile 与 publish-approved。这些是 skill 的工作模式，平台写入通过获授权的真实工具完成；[ledger helper](skills/intgral-knowledge-workflow/references/state.md) 只提供本机去重、修订与回执，不是已部署的同步服务。运行前核对实际平台能力与权限，不能凭本地 ledger 宣称远端已写入或隔离成功。
 

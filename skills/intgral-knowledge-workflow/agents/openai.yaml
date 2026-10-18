@@ -1,4 +1,4 @@
 interface:
   display_name: "Intgral Knowledge Workflow"
   short_description: "从 Slack 请求查询或更新文档，同步会议与想法，核对决定并按权限回告进展"
-  default_prompt: "使用 $intgral-knowledge-workflow 处理本线程的查询、提案或写回请求，核对有关 Decision、确认权与受众，修改后读回复核并在原线程简短回告；涉及 Wispr 时先核验连接与读取，未批准的 founders 内容保持私有。"
+  default_prompt: "使用 $intgral-knowledge-workflow 处理本线程的查询、提案或写回请求，核对有关 Decision、确认权与受众，修改后读回复核并简短回告；Wispr 先核验连接和分类，按登记常设授权将 Team 纪要与 Founders 会议分流到各自集合，个人 thoughts 仅 owner 可见。"

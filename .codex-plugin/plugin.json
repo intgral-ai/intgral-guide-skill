@@ -1,6 +1,6 @@
 {
   "name": "intgral-knowledge-workflow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Reconcile evidence, pending decisions, verified documents and audience-safe updates on every cycle.",
   "author": { "name": "Intgral" },
   "license": "MIT",

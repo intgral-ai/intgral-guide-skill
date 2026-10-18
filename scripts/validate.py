@@ -18,6 +18,7 @@ PUBLIC_FILES = frozenset({
     'skills/intgral-knowledge-workflow/SKILL.md',
     'skills/intgral-knowledge-workflow/agents/openai.yaml',
     'skills/intgral-knowledge-workflow/references/wispr.md',
+    'skills/intgral-knowledge-workflow/references/meeting-routing.md',
     'skills/intgral-knowledge-workflow/references/archive.md',
     'skills/intgral-knowledge-workflow/references/topdown.md',
     'skills/intgral-knowledge-workflow/references/decision.md',

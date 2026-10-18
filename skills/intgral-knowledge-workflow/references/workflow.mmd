@@ -34,8 +34,17 @@ flowchart TD
     Request -->|No: scheduled source sync| Inputs[Read ready sources and registered docs; record coverage gaps]
     Inputs --> Scope{Audience and permissions verified?}
     Scope -->|No| Private[Owner-only pending classification]
-    Scope -->|Yes| Draft[Archive evidence and update same-audience topic draft]
-    Draft --> Questions[Register all unresolved questions]
+    Scope -->|Yes| MeetingRoute{Verified source classification}
+    MeetingRoute -->|Team notes| TeamPolicy{Standing meeting route authorized and target ACL verified?}
+    TeamPolicy -->|Yes| TeamArchive[Sync meeting evidence only to shared Meeting / date / topic]
+    TeamPolicy -->|No| Private
+    MeetingRoute -->|Founders meeting| FounderArchive[Sync to private Founders Meeting / date / topic]
+    MeetingRoute -->|Personal thoughts| OwnerArchive[Owner-only notes and state]
+    MeetingRoute -->|Unknown or conflict| Private
+    TeamArchive --> MeetingVerify[Read back per-audience target; preserve manual notes and images]
+    FounderArchive --> MeetingVerify
+    OwnerArchive --> Receipts
+    MeetingVerify --> Questions[Register all unresolved questions]
     Questions --> Decision[Dedicated private Decision inbox: one question / revision / thread]
     Decision -->|Waiting / more evidence| Pending[Keep pending; continue independent safe work]
     Pending --> Tick
