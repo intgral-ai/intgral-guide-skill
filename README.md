@@ -12,6 +12,8 @@
 
 新入口：`$intgral-knowledge-workflow`，每轮先检查 Wispr 连接器、账号与实际读取能力，再核对 Decision、处理新来源和所有待确认项，按权限更新文档与通知。连接失败保留 pending 与 checkpoint。阶段升级不扩大受众；私密内容向团队发布需要单独批准。完整流程见 [Mermaid 图](skills/intgral-knowledge-workflow/references/workflow.mmd)。
 
+Slack 是成员的日常入口：在线程召唤已接入的 agent 查询、确认或更新 docs，agent 在同一线程回告结果。docs 由 agent 维护，成员按需阅读。明确决定与写入授权可同条完成；实际召唤入口须单独绑定与验收，插件安装不等于已部署监听。交互、权限、回执与恢复见 [Slack 操作规范](skills/intgral-knowledge-workflow/references/slack-interface.md)。纯 Slack/docs 请求只检查所需能力，引用 Wispr 时再核验 Wispr。
+
 普通 skill 安装：使用 skill-installer 从本仓库已合并的 main 安装 `skills/intgral-knowledge-workflow`；需要原提示词兼容时同时安装 `skills/intgral-meeting`。插件包同时包含两个入口，并声明官方 Wispr Flow 与 Slack 为必需 app；成员仍须使用自己的账号授权。插件名升级为 intgral-knowledge-workflow，既有插件安装不等于新版已安装。
 
 调用示例：

@@ -52,7 +52,7 @@ description: Help Intgral team members find sources, capture research exploratio
 
 ## 资料索引与代码图
 
-项目启用 knowledge_workflow 时，专项的会议/想法同步与 Decision 闭环使用已安装的 [intgral-knowledge-workflow](skills/intgral-knowledge-workflow/SKILL.md)：每轮先核对确认与待处理项，再按权限写回和通知。Team 运行器只读取获准的 Team 投影；本指南负责资料路由，不重复实现该流程。缺少专项 skill 时可继续导航、读取和准备私有草稿，但不能宣称完成 Decision 核验或发布。
+项目启用 knowledge_workflow 时，会议/想法同步、Slack 线程召唤 agent 查询或更新 docs、Decision 闭环使用已安装的 [intgral-knowledge-workflow](skills/intgral-knowledge-workflow/SKILL.md)：每轮先核对确认与待处理项，再按权限写回并回告结果。Team 运行器只读取获准的 Team 投影；实际 Slack 召唤入口另须接入验证。本指南负责资料路由，不重复实现该流程。缺少专项 skill 时可继续导航、读取和准备私有草稿，但不能宣称完成 Decision 核验或发布。
 
 本 skill 通过项目配置中的 `local_indexes` 路由文档、设计、沟通、研究和代码入口。读取索引中的状态、日期和核验标记，再沿条目中的 URL 或来源路径读取原文；线上状态按需刷新。
 

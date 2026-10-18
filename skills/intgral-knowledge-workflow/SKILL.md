@@ -1,11 +1,11 @@
 ---
 name: intgral-knowledge-workflow
-description: Run the evidence-to-decision workflow for Wispr meetings, early ideas and docs updates. Reconcile Decision on every cycle, preserve audience permissions, write verified records and notify material changes. Use for meeting synchronization, pending questions, confirmed decisions and explicitly approved publication.
+description: Run the evidence-to-decision workflow for Wispr meetings, early ideas, Slack requests and docs updates. Use for thread-based agent requests to query or update documents, meeting synchronization, pending questions, confirmed decisions and approved publication; preserve audience permissions and verify writes.
 ---
 
 # Intgral Knowledge Workflow
 
-连接来源、主题、Decision、有效文档、进展通知与执行反馈。每轮经过 Decision；没有待确认事项时也记录已核对，不能跳过。阶段与权限分别维护，确认决定不自动批准扩大受众。
+Slack 是日常交互入口，docs 保存长期有效记录；成员在线程提问、确认、召唤 agent 修改文档并看结果，按需打开原文。连接来源、主题、Decision、有效文档、进展通知与执行反馈。每轮经过 Decision；没有待确认事项时也记录已核对，不能跳过。阶段与权限分别维护，确认决定不自动批准扩大受众。
 
 ## 接入
 
@@ -13,7 +13,11 @@ description: Run the evidence-to-decision workflow for Wispr meetings, early ide
 
 使用 Wispr、docs 和 Slack 的实际工具；账号授权、文档目标、Decision 目的地及成员、批准权限、运行身份、状态和 outbox 路径留私有配置。主流程见 [workflow.mmd](references/workflow.mmd)。工具不可用时保存私有待处理记录并说明缺口，不把尝试说成写入或上线。
 
-**前置检查：** 每轮先发现 Wispr Flow 连接器，核实当前账号并用该身份做最小范围的实际会议读取。安装声明不能代替连接和读取成功；失败保持来源 pending、保留 checkpoint，不记成零条新会议。具体状态、受限身份与恢复规则见 [wispr.md](references/wispr.md#同步前置检查)。独立的 Decision/docs 工作仍按原权限继续。
+**前置检查：** 涉及 Wispr 来源同步时，每轮先发现 Wispr Flow 连接器，核实当前账号并用该身份做最小范围的实际会议读取。安装声明不能代替连接和读取成功；失败保持来源 pending、保留 checkpoint，不记成零条新会议。具体状态、受限身份与恢复规则见 [wispr.md](references/wispr.md#同步前置检查)。纯 Slack/docs 请求只核验所需能力，独立的 Decision/docs 工作仍按原权限继续。
+
+## Slack 线程请求
+
+成员召唤 agent 查询、整理、纠错、按结论更新 docs 或要求发布时，读取 [Slack 操作规范](references/slack-interface.md)，按请求权限执行并回到原线程交付。负责人的明确决定与写回请求可以在同一条消息完成，不重复要求审批。接收 agent、事件/轮询入口和运行身份必须实测登记；连接器可发消息不证明已能接收 Slack 召唤。
 
 ## 每轮执行
 
