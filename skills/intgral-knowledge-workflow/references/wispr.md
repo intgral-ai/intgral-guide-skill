@@ -9,6 +9,7 @@
 | `search_meetings` | 无 query 时按最近修改列出；`since` / `until` 过滤会议发生时间，半开区间，并非修改时间 |
 | `get_meeting` | `summary` 是自动总结；`content` 是会议笔记/My thoughts；`transcript` 是逐字稿，三者分别处理 |
 | `search_scratchpad_notes` | 独立笔记列表；无 query 时列出最近修改笔记，日期过滤针对修改时间 |
+| `get_scratchpad_note` | 读取指定独立笔记正文；按字符 continuation offset 分页 |
 | `get_account_info` | 需要核实当前连接账号、第一人称归属时使用；身份信息只留在私有记录 |
 
 这些能力负责读取，不负责写回 Wispr 或更改分享设置。使用返回的 `share_link`；缺失时注明尚无链接，不拼接 URL，也不承诺接收者有访问权。
@@ -26,7 +27,7 @@
 1. 通过 `get_meeting` 请求 `view_content` 和 `view_transcript`。需要决定、行动、分工或 top-down 更新时，以完整逐字稿核实，不能只依赖自动 summary。
 2. `content` 与 transcript 都是字符分页。按各自返回标记中的**精确 continuation offset**继续，直至完整；不要用输出长度猜下个 offset。summary 每次完整返回，拼页时只保留一份。
 3. `has_transcript=true` 却读不到、录音仍在处理或分页未完成时记录待补原文。可以发布标明覆盖限制的摘要，但不把 transcript 阶段标为完成。
-4. 用户说 thoughts/notes 时同时检查会议 `content` 和独立 scratchpad。不要仅搜索字面词 “thoughts”；独立笔记零结果不代表会议 My thoughts 为空。分别报告两类读取结果。scratchpad 返回截断且当前工具无法取全文时记录缺口，不根据片段作确认决定。
+4. 用户说 thoughts/notes 时同时检查会议 `content` 和独立 scratchpad。不要仅搜索字面词 “thoughts”；独立笔记零结果不代表会议 My thoughts 为空。列表后通过 `get_scratchpad_note` 按精确 offset 完整读取所需笔记；工具不可用或正文仍不完整时记录缺口，不根据片段作确认决定。分别报告两类读取结果。
 5. 自动 summary 和个人 thoughts 中的“下一步”是候选行动，回到原话和后续明确确认核验。记录是谁的想法；提到某人、日历参会名单、标题或 Unknown Speaker 均不能单独建立说话人映射。
 6. UTC 时间用于私有源记录；展示时使用配置的 IANA 时区，逐日计算 DST，保留具体日期。不要把会议发生、源修改、归档写入时间混为一个时间。
 

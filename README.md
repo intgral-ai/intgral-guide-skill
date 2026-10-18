@@ -6,29 +6,23 @@
 
 调用名：`intgral-guide-skill`。仓库：https://github.com/intgral-ai/intgral-guide-skill。
 
-仓库另含 [intgral-meeting](skills/intgral-meeting/SKILL.md)：读取 Wispr Flow 会议、My thoughts 与独立笔记，查重归档，并在用户要求时从产品愿景到 MVP、engineering 更新现有文档。未确认的范围与分工保持待确认。
+仓库另含完整的 [intgral-knowledge-workflow](skills/intgral-knowledge-workflow/SKILL.md)，连接 Wispr 会议、早期想法、Decision、docs、更新通知与执行反馈。原 `$intgral-meeting` 保留为兼容入口。
 
-## Meeting skill 与 Wispr 接入
+## Knowledge workflow 与接入
 
-原有指南仍在仓库根目录；会议 skill 在 `skills/intgral-meeting/`，两者可分别安装。正式安装使用已合并的 `main`；PR 分支供评审，不覆盖已安装的稳定副本。
+新入口：`$intgral-knowledge-workflow`，每轮先核对 Decision，处理新来源和所有待确认项，再按权限更新文档与通知。阶段升级不扩大受众；私密内容向团队发布需要单独批准。完整流程见 [Mermaid 图](skills/intgral-knowledge-workflow/references/workflow.mmd)。
 
-在带有 skill-installer 的 Codex 中，合并后可直接请求：
-
-> 使用 $skill-installer，从 intgral-ai/intgral-guide-skill 的 main 安装 skills/intgral-meeting。
-
-也可将 `skills/intgral-meeting/` 完整复制到客户端的 skills 目录，保留 `references/` 和 `agents/`。安装后下一轮对话可调用 `$intgral-meeting`。
-
-在客户端连接 **Wispr Flow**，使用本人账号完成授权。仅安装 skill 不会自动安装连接器或完成 OAuth。支持 Codex plugin 的客户端可加载本仓库根目录的 [.codex-plugin/plugin.json](.codex-plugin/plugin.json)，其中通过 [.app.json](.app.json) 将官方 Wispr app 声明为必需依赖；该 manifest 不含令牌，也不代成员授权。导入入口由客户端提供。
-
-首次使用前，在私有配置或当前会话提供：归档目标、时区、来源相关性/起始范围、私有 state 路径；需要 top-down 时再指定三份现有主文档。已有项目配置则直接沿用。只在获授权的目标登录 docs，并遵守项目的浏览器设置。不要把个人配置、state、会议原文或账号凭据放入本仓库。
+普通 skill 安装：使用 skill-installer 从本仓库已合并的 main 安装 `skills/intgral-knowledge-workflow`；需要原提示词兼容时同时安装 `skills/intgral-meeting`。插件包同时包含两个入口，并声明官方 Wispr Flow 与 Slack 为必需 app；成员仍须使用自己的账号授权。插件名升级为 intgral-knowledge-workflow，既有插件安装不等于新版已安装。
 
 调用示例：
 
-> 使用 $intgral-meeting，更新今天的 meeting，包含 Wispr 的 My thoughts 和独立笔记，写回现有会议档案。
+> 使用 $intgral-knowledge-workflow 执行一轮同步：先读取 Decision 回复，再归档会议与 thoughts，更新同权限主题，把全部待确认项提交到配置的决策队列；仅在明确批准范围写回并推送重大更新。
 
-> 使用 $intgral-meeting，根据这三场会议从 top down 更新产品愿景、MVP 和 engineering。未确认的范围、分工和日期标待确认，保留已有确认和评论。
+私有配置需提供 docs 目标与权限、来源范围/时区、Decision 与通知目的地、实际批准权限、隔离运行身份、私有状态/outbox 路径。可以复用既有私密协调频道；一个问题一条稳定线程，无变化不重复提醒。Team 运行器只读获准的 Team 决策投影，不能读取私密频道。没有有效 Decision 读取仍可保存私有草稿，但依赖确认的承诺和发布保持 pending。
 
-接入验证分三步：能列出本人授权范围的会议；能完整读取一场会议的 notes/transcript；能按请求写入并重新加载目标档案。只验证连接时不要修改文档。插件导入、连接授权与写回是否成功分别报告；本仓库的静态检查不能证明客户端已连接。
+运行模式包括 dry-run、apply、verify、reconcile 与 publish-approved。这些是 skill 的工作模式，平台写入通过获授权的真实工具完成；[ledger helper](skills/intgral-knowledge-workflow/references/state.md) 只提供本机去重、修订与回执，不是已部署的同步服务。运行前核对实际平台能力与权限，不能凭本地 ledger 宣称远端已写入或隔离成功。
+
+文档与消息需要实际读回验证。已有待发送记录结果不明时先核对远端，再续办；跨机器仍需共享去重与协调。真实白名单、内部地址、会议内容、账号信息和私有队列不进入本仓库。升级先保留旧 state 与 checkpoint，验证迁移后再切换已安装副本；正式安装使用合并后的 main，未合并分支只供评审。
 
 ## 使用
 

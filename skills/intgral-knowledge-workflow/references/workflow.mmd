@@ -1,0 +1,22 @@
+flowchart TD
+    Tick[Every cycle] --> Check[Reconcile authorized Decision replies / Team projection]
+    Check --> Inputs[Read changed Wispr notes and registered docs]
+    Inputs --> Scope{Audience and permissions verified?}
+    Scope -->|No| Private[Owner-only pending classification]
+    Scope -->|Yes| Draft[Archive evidence and update same-audience topic draft]
+    Draft --> Questions[Register all unresolved questions]
+    Questions --> Decision[Decision inbox: one question / revision / thread]
+    Decision -->|Waiting / more evidence| Pending[Keep pending; continue independent safe work]
+    Pending --> Tick
+    Decision -->|Explicit scoped confirmation| Record[Write decision at original visibility]
+    Record --> Verify[Reload and verify docs]
+    Verify --> Notice[Material update to authorized private audience]
+    Record --> Release{Exact Team publication approved?}
+    Release -->|No| Hold[Keep private; no Team publication]
+    Release -->|Yes| Projection[Minimal approved Team payload]
+    Projection --> Team[Team docs / authorized execution]
+    Team --> TeamVerify[Read back and verify]
+    TeamVerify --> TeamNotice[Team material update / digest]
+    Notice --> Receipts[Separate receipts and execution feedback]
+    TeamNotice --> Receipts
+    Receipts --> Tick

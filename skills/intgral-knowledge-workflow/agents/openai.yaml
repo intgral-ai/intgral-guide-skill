@@ -1,0 +1,4 @@
+interface:
+  display_name: "Intgral Knowledge Workflow"
+  short_description: "同步会议与想法，经过 Decision 确认后写回文档、发布进展并持续复核"
+  default_prompt: "使用 $intgral-knowledge-workflow 执行一轮同步：先核对 Decision，再归档来源、归并主题、提交全部待确认项，按权限写回并推送重大更新；未批准的 founders 内容不得进入 Team。"

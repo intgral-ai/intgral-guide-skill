@@ -1,4 +1,4 @@
 interface:
-  display_name: "Intgral Meeting"
-  short_description: "整理 Wispr 会议与 thoughts，归档并同步产品和工程文档"
-  default_prompt: "使用 $intgral-meeting 更新今天的 Wispr 会议与 thoughts；按需同步产品愿景、MVP 和 engineering，未确认的范围与分工标待确认。"
+  display_name: "Intgral Meeting (compatibility)"
+  short_description: "兼容原会议提示词，转入包含 Decision、文档回写与通知的完整工作流"
+  default_prompt: "使用 $intgral-meeting 进入已安装的 intgral-knowledge-workflow，每轮先核对 Decision，再按权限归档、写回与通知。"
