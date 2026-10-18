@@ -1,5 +1,17 @@
 # Wispr：完整读取与增量发现
 
+## 同步前置检查
+
+每轮来源同步前，在当前运行环境依次核验：
+
+1. **连接器可发现。** 查找官方 Wispr Flow 工具；没有工具时，通过可用的插件管理能力核对安装/连接入口，记录 missing，并提供真实入口。插件 manifest 中 required 或已安装不证明已连接。
+2. **账号正确。** 调用 `get_account_info`，与私有配置中该运行器获授权的账号核对。身份不匹配或尚未核验时保持 identity_pending，不借用另一成员或 founders 的高权限连接替代 Team 身份。需要登录时让账号本人完成授权。
+3. **所需来源可读。** 使用该身份做最小范围读取。Founders 协调器可用 `search_meetings(limit=1)`；受限 Team 运行器只对已授权的 folder/source 做读取，不能用全账号列表探测私有会议。会议、文件夹、scratchpad 的能力分别核验；账号查询成功不能证明会议或想法可读。零条成功结果只表示本次查询为空。
+
+在私有运行记录保存 checked_at、运行身份、所检查能力与范围、结果状态及错误类别；不复制无关会议正文。区分 missing、authorization_required、identity_pending、scope_denied、read_failed 和 ready（含成功空结果），按实际错误记录，不能用猜测补齐。
+
+前置未通过时，本轮 Wispr 同步保持 pending；保留上次成功 checkpoint 和重叠窗口，不标为无新内容或成功同步。只对通过检查的来源能力继续，明确未覆盖项；独立的 Decision/docs 核对可以继续。恢复连接后重新检查，再从保留的 checkpoint 补读；已确认的文件夹 ID 和逐条分享权限仍须单独核验。前置检查不替代每次写入前的目标权限检查。
+
 ## 连接器能力
 
 优先使用 Wispr Flow 的原生工具；下列为工具后缀，完整前缀由客户端决定：
@@ -10,7 +22,7 @@
 | `get_meeting` | `summary` 是自动总结；`content` 是会议笔记/My thoughts；`transcript` 是逐字稿，三者分别处理 |
 | `search_scratchpad_notes` | 独立笔记列表；无 query 时列出最近修改笔记，日期过滤针对修改时间 |
 | `get_scratchpad_note` | 读取指定独立笔记正文；按字符 continuation offset 分页 |
-| `get_account_info` | 需要核实当前连接账号、第一人称归属时使用；身份信息只留在私有记录 |
+| `get_account_info` | 前置检查与第一人称归属时使用；身份信息只留在私有记录 |
 
 这些能力负责读取，不负责写回 Wispr 或更改分享设置。使用返回的 `share_link`；缺失时注明尚无链接，不拼接 URL，也不承诺接收者有访问权。
 

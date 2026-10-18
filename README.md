@@ -10,15 +10,15 @@
 
 ## Knowledge workflow 与接入
 
-新入口：`$intgral-knowledge-workflow`，每轮先核对 Decision，处理新来源和所有待确认项，再按权限更新文档与通知。阶段升级不扩大受众；私密内容向团队发布需要单独批准。完整流程见 [Mermaid 图](skills/intgral-knowledge-workflow/references/workflow.mmd)。
+新入口：`$intgral-knowledge-workflow`，每轮先检查 Wispr 连接器、账号与实际读取能力，再核对 Decision、处理新来源和所有待确认项，按权限更新文档与通知。连接失败保留 pending 与 checkpoint。阶段升级不扩大受众；私密内容向团队发布需要单独批准。完整流程见 [Mermaid 图](skills/intgral-knowledge-workflow/references/workflow.mmd)。
 
 普通 skill 安装：使用 skill-installer 从本仓库已合并的 main 安装 `skills/intgral-knowledge-workflow`；需要原提示词兼容时同时安装 `skills/intgral-meeting`。插件包同时包含两个入口，并声明官方 Wispr Flow 与 Slack 为必需 app；成员仍须使用自己的账号授权。插件名升级为 intgral-knowledge-workflow，既有插件安装不等于新版已安装。
 
 调用示例：
 
-> 使用 $intgral-knowledge-workflow 执行一轮同步：先读取 Decision 回复，再归档会议与 thoughts，更新同权限主题，把全部待确认项提交到配置的决策队列；仅在明确批准范围写回并推送重大更新。
+> 使用 $intgral-knowledge-workflow 执行一轮同步：先检查 Wispr 连接与读取能力，再读取 Decision 回复、归档会议与 thoughts，更新同权限主题，把全部待确认项提交到配置的决策队列；仅在明确批准范围写回并推送重大更新。
 
-私有配置需提供 docs 目标与权限、来源范围/时区、Decision 与通知目的地、实际批准权限、隔离运行身份、私有状态/outbox 路径。可以复用既有私密协调频道；一个问题一条稳定线程，无变化不重复提醒。Team 运行器只读获准的 Team 决策投影，不能读取私密频道。没有有效 Decision 读取仍可保存私有草稿，但依赖确认的承诺和发布保持 pending。
+私有配置需提供 docs 目标与权限、来源范围/时区、独立私密 Decision 频道与完整成员白名单、公司/团队通知目的地、实际批准权限、隔离运行身份、私有状态/outbox 路径。一个问题一条稳定线程，无变化不重复提醒。Team 运行器只读获准的 Team 决策投影，不能读取私密频道。没有有效 Decision 读取仍可保存私有草稿，但依赖确认的承诺和发布保持 pending。
 
 运行模式包括 dry-run、apply、verify、reconcile 与 publish-approved。这些是 skill 的工作模式，平台写入通过获授权的真实工具完成；[ledger helper](skills/intgral-knowledge-workflow/references/state.md) 只提供本机去重、修订与回执，不是已部署的同步服务。运行前核对实际平台能力与权限，不能凭本地 ledger 宣称远端已写入或隔离成功。
 

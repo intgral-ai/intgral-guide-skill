@@ -13,6 +13,8 @@ description: Run the evidence-to-decision workflow for Wispr meetings, early ide
 
 使用 Wispr、docs 和 Slack 的实际工具；账号授权、文档目标、Decision 目的地及成员、批准权限、运行身份、状态和 outbox 路径留私有配置。主流程见 [workflow.mmd](references/workflow.mmd)。工具不可用时保存私有待处理记录并说明缺口，不把尝试说成写入或上线。
 
+**前置检查：** 每轮先发现 Wispr Flow 连接器，核实当前账号并用该身份做最小范围的实际会议读取。安装声明不能代替连接和读取成功；失败保持来源 pending、保留 checkpoint，不记成零条新会议。具体状态、受限身份与恢复规则见 [wispr.md](references/wispr.md#同步前置检查)。独立的 Decision/docs 工作仍按原权限继续。
+
 ## 每轮执行
 
 1. **先核对 Decision。** 在授权范围内读取已登记线程的新回复、确认、更正、未结事项及新的人工作业提交，分页读全；Team 运行器只读取经过授权的 Team 投影，不读取私密 founders 频道。记录实际读取范围、截止时间和不可读项。Decision 暂不可用时仍可保存同权限来源草稿；会改变承诺或扩大受众的发布保持 pending。
