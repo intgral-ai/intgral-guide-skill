@@ -1,18 +1,32 @@
 flowchart TD
     Mention[Explicit Slack thread request] --> Intake[Verified agent receiver / sender / target / request receipt]
-    Intake --> Check
+    Intake --> Route[Verify source and result audience; route to configured private Decision entry]
+    Route --> Check
     Check --> Request{Thread request present?}
     Request -->|Yes| RequestRead[Read thread and current docs; verify authority and audience]
-    RequestRead --> Action{Requested write authorized?}
+    RequestRead --> Kind{Work target?}
+    Kind -->|Docs| Action{Requested write authorized?}
+    Kind -->|Linear| LinearReady{Actual runtime connection and registered project verified?}
+    LinearReady -->|No| LinearPending[Keep access pending]
+    LinearPending --> ThreadReply
+    LinearReady -->|Yes| LinearMode{Query or public write?}
+    LinearMode -->|Query| LinearRead[Read current issues; return actual issue links]
+    LinearRead --> ThreadReply
+    LinearMode -->|Task or comment| PublicDraft[Show public draft in Decision; private provenance stays private]
+    PublicDraft --> PublicGate{Required details and exact owner / author confirmation?}
+    PublicGate -->|Missing| Questions
+    PublicGate -->|Confirmed current draft| LinearWrite[Host executes minimal approved action]
+    LinearWrite --> LinearVerify[Read back; reconcile unknown outcomes before retry]
+    LinearVerify --> ThreadReply
     Action -->|Yes| RequestWrite[Apply minimal document changes]
     RequestWrite --> RequestVerify[Reload each target and verify]
-    RequestVerify --> ThreadReply[Reply in source thread: answer / changes / remaining work]
+    RequestVerify --> ThreadReply[Protected result thread: answer / named document and issue links / remaining work]
     RequestVerify --> RequestNotice[Material changes only: configured audience notification]
     RequestNotice --> Receipts
     Action -->|Needs confirmation| Questions
     Action -->|Query / proposal only| ThreadReply
     ThreadReply --> Receipts
-    Tick[Every cycle] --> Preflight[Check Wispr connector / authorized identity / scoped read]
+    Tick[Configured cycle] --> Preflight[Check Wispr connector / authorized identity / scoped read]
     Preflight --> Gate{Wispr prerequisite ready?}
     Gate -->|No| SourcePending[Keep Wispr pending and checkpoint; continue independent work]
     Gate -->|Yes| Check[Reconcile authorized private Decision / approved Team projection]
