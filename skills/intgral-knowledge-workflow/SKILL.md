@@ -5,7 +5,7 @@ description: Run the evidence-to-decision workflow for Wispr meetings, early ide
 
 # Intgral Knowledge Workflow
 
-Slack 是日常交互入口，docs 保存长期有效记录；成员在线程提问、确认、召唤 agent 修改文档并看结果，按需打开原文。连接来源、主题、Decision、有效文档、进展通知与执行反馈。每轮经过 Decision；没有待确认事项时也记录已核对，不能跳过。阶段与权限分别维护，确认决定不自动批准扩大受众。
+Slack 是日常工作入口，成员在线程召唤 agent 提问、讨论、确认并推进工作。小事直接在线程交付；docs 承接需要留存的有效记录、中间稿和复杂产物，成员按需打开原文。连接来源、主题、Decision、有效文档、进展通知与执行反馈。每轮经过 Decision；没有待确认事项时也记录已核对，不能跳过。阶段与权限分别维护，确认决定不自动批准扩大受众。
 
 ## 接入
 
