@@ -1,0 +1,62 @@
+flowchart TD
+    Mention[Explicit Slack thread request] --> Intake[Verified agent receiver / sender / target / request receipt]
+    Intake --> Route[Verify source and result audience; route to configured private Decision entry]
+    Route --> Check
+    Check --> Request{Thread request present?}
+    Request -->|Yes| RequestRead[Read thread and current docs; verify authority and audience]
+    RequestRead --> Kind{Work target?}
+    Kind -->|Docs| Action{Requested write authorized?}
+    Kind -->|Linear| LinearReady{Actual runtime connection and registered project verified?}
+    LinearReady -->|No| LinearPending[Keep access pending]
+    LinearPending --> ThreadReply
+    LinearReady -->|Yes| LinearMode{Query or public write?}
+    LinearMode -->|Query| LinearRead[Read current issues; return actual issue links]
+    LinearRead --> ThreadReply
+    LinearMode -->|Task or comment| PublicDraft[Show public draft in Decision; private provenance stays private]
+    PublicDraft --> PublicGate{Required details and exact owner / author confirmation?}
+    PublicGate -->|Missing| Questions
+    PublicGate -->|Confirmed current draft| LinearWrite[Host executes minimal approved action]
+    LinearWrite --> LinearVerify[Read back; reconcile unknown outcomes before retry]
+    LinearVerify --> ThreadReply
+    Action -->|Yes| RequestWrite[Apply minimal document changes]
+    RequestWrite --> RequestVerify[Reload each target and verify]
+    RequestVerify --> ThreadReply[Protected result thread: answer / named document and issue links / remaining work]
+    RequestVerify --> RequestNotice[Material changes only: configured audience notification]
+    RequestNotice --> Receipts
+    Action -->|Needs confirmation| Questions
+    Action -->|Query / proposal only| ThreadReply
+    ThreadReply --> Receipts
+    Tick[Configured cycle] --> Preflight[Check Wispr connector / authorized identity / scoped read]
+    Preflight --> Gate{Wispr prerequisite ready?}
+    Gate -->|No| SourcePending[Keep Wispr pending and checkpoint; continue independent work]
+    Gate -->|Yes| Check[Reconcile authorized private Decision / approved Team projection]
+    SourcePending --> Check
+    Request -->|No: scheduled source sync| Inputs[Read ready sources and registered docs; record coverage gaps]
+    Inputs --> Scope{Audience and permissions verified?}
+    Scope -->|No| Private[Owner-only pending classification]
+    Scope -->|Yes| MeetingRoute{Verified source classification}
+    MeetingRoute -->|Team notes| TeamPolicy{Standing meeting route authorized and target ACL verified?}
+    TeamPolicy -->|Yes| TeamArchive[Sync meeting evidence only to shared Meeting / date / topic]
+    TeamPolicy -->|No| Private
+    MeetingRoute -->|Founders meeting| FounderArchive[Sync to private Founders Meeting / date / topic]
+    MeetingRoute -->|Personal thoughts| OwnerArchive[Owner-only notes and state]
+    MeetingRoute -->|Unknown or conflict| Private
+    TeamArchive --> MeetingVerify[Read back per-audience target; preserve manual notes and images]
+    FounderArchive --> MeetingVerify
+    OwnerArchive --> Receipts
+    MeetingVerify --> Questions[Register all unresolved questions]
+    Questions --> Decision[Dedicated private Decision inbox: one question / revision / thread]
+    Decision -->|Waiting / more evidence| Pending[Keep pending; continue independent safe work]
+    Pending --> Tick
+    Decision -->|Explicit scoped confirmation| Record[Write decision at original visibility]
+    Record --> Verify[Reload and verify docs]
+    Verify --> Notice[Material update to separate authorized company destination]
+    Record --> Release{Exact Team publication approved?}
+    Release -->|No| Hold[Keep private; no Team publication]
+    Release -->|Yes| Projection[Minimal approved Team payload]
+    Projection --> Team[Team docs / authorized execution]
+    Team --> TeamVerify[Read back and verify]
+    TeamVerify --> TeamNotice[Team material update / digest]
+    Notice --> Receipts[Separate receipts and execution feedback]
+    TeamNotice --> Receipts
+    Receipts --> Tick

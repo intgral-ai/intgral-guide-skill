@@ -15,9 +15,21 @@ PUBLIC_FILES = frozenset({
     'scripts/validate.py', 'tests/test_validate.py',
     '.codex-plugin/plugin.json', '.app.json',
     'skills/intgral-meeting/SKILL.md', 'skills/intgral-meeting/agents/openai.yaml',
-    'skills/intgral-meeting/references/wispr.md',
-    'skills/intgral-meeting/references/archive.md',
-    'skills/intgral-meeting/references/topdown.md',
+    'skills/intgral-knowledge-workflow/SKILL.md',
+    'skills/intgral-knowledge-workflow/agents/openai.yaml',
+    'skills/intgral-knowledge-workflow/references/wispr.md',
+    'skills/intgral-knowledge-workflow/references/meeting-routing.md',
+    'skills/intgral-knowledge-workflow/references/archive.md',
+    'skills/intgral-knowledge-workflow/references/topdown.md',
+    'skills/intgral-knowledge-workflow/references/decision.md',
+    'skills/intgral-knowledge-workflow/references/slack-interface.md',
+    'skills/intgral-knowledge-workflow/references/slack-discussions.md',
+    'skills/intgral-knowledge-workflow/references/permissions.md',
+    'skills/intgral-knowledge-workflow/references/publication.md',
+    'skills/intgral-knowledge-workflow/references/state.md',
+    'skills/intgral-knowledge-workflow/references/workflow.mmd',
+    'skills/intgral-knowledge-workflow/scripts/ledger.py',
+    'tests/test_workflow_ledger.py',
 })
 RULES = (
     ('credential token', re.compile(r'\b(?:gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|sk-[A-Za-z0-9_-]{24,}|AKIA[A-Z0-9]{16})\b')),
@@ -94,25 +106,29 @@ def scan_history(root):
     return errors
 
 
-def check_meeting_plugin(root):
-    """Keep the packaged meeting entrypoint and required app resolvable."""
+def check_workflow_plugin(root):
+    """Keep the canonical workflow, compatibility entry and required apps resolvable."""
     try:
         manifest = json.loads((root / '.codex-plugin/plugin.json').read_text())
-        if (manifest['name'] != 'intgral-meeting'
+        if (manifest['name'] != 'intgral-knowledge-workflow'
                 or manifest['skills'] != './skills/' or manifest['apps'] != './.app.json'):
-            return ['meeting plugin: invalid entrypoints']
+            return ['workflow plugin: invalid entrypoints']
         apps = json.loads((root / '.app.json').read_text())['apps']
         wispr = apps['app-6a5ae9736be0819199d06d61ac171080']
+        slack = apps['slack']
         if (wispr['id'] != 'asdk_app_6a5ae9736be0819199d06d61ac171080'
-                or wispr['required'] is not True):
-            return ['meeting plugin: Wispr Flow must be the required app']
-        skill = root / 'skills/intgral-meeting/SKILL.md'
-        match = re.match(r'\A---\n(.*?)\n---\n', skill.read_text(), re.DOTALL)
-        fields = dict(line.split(':', 1) for line in match[1].splitlines() if ':' in line) if match else {}
-        if fields.get('name', '').strip() != 'intgral-meeting' or not fields.get('description', '').strip():
-            return ['meeting skill: invalid name or description']
+                or wispr['required'] is not True
+                or slack['id'] != 'asdk_app_69a1d78e929881919bba0dbda1f6436d'
+                or slack['required'] is not True):
+            return ['workflow plugin: Wispr Flow and Slack must be required apps']
+        for name in ('intgral-knowledge-workflow', 'intgral-meeting'):
+            skill = root / 'skills' / name / 'SKILL.md'
+            match = re.match(r'\A---\n(.*?)\n---\n', skill.read_text(), re.DOTALL)
+            fields = dict(line.split(':', 1) for line in match[1].splitlines() if ':' in line) if match else {}
+            if fields.get('name', '').strip() != name or not fields.get('description', '').strip():
+                return ['workflow skill: invalid name or description']
     except (OSError, ValueError, KeyError, TypeError):
-        return ['meeting plugin: missing or invalid manifest, app dependency or skill']
+        return ['workflow plugin: missing or invalid manifest, app dependency or skill']
     return []
 
 
@@ -156,7 +172,7 @@ def validate(root):
         except (ValueError, KeyError, TypeError):
             errors.append('team-context example has an invalid schema')
     errors.extend(check_links(root, paths))
-    errors.extend(check_meeting_plugin(root))
+    errors.extend(check_workflow_plugin(root))
     return errors
 
 
