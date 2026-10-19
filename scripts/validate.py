@@ -126,10 +126,15 @@ def check_workflow_plugin(root):
             return ['workflow plugin: Wispr Flow and Slack must be required apps']
         for name in ('intgral-knowledge-workflow', 'intgral-meeting', 'intgral-meeting-prepare'):
             skill = root / 'skills' / name / 'SKILL.md'
+            label = skill.relative_to(root).as_posix()
+            if not skill.is_file():
+                return [f'{label}: missing workflow skill file']
             match = re.match(r'\A---\n(.*?)\n---\n', skill.read_text(), re.DOTALL)
-            fields = dict(line.split(':', 1) for line in match[1].splitlines() if ':' in line) if match else {}
+            if not match:
+                return [f'{label}: missing frontmatter']
+            fields = dict(line.split(':', 1) for line in match[1].splitlines() if ':' in line)
             if fields.get('name', '').strip() != name or not fields.get('description', '').strip():
-                return ['workflow skill: invalid name or description']
+                return [f'{label}: invalid name or description']
     except (OSError, ValueError, KeyError, TypeError):
         return ['workflow plugin: missing or invalid manifest, app dependency or skill']
     return []

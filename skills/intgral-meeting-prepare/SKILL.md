@@ -1,6 +1,6 @@
 ---
 name: intgral-meeting-prepare
-description: Prepare an Intgral pre-meeting Draft from the latest authorized docs template and current work evidence. Use before a team or founders meeting to refresh progress, top-down discussion questions and the next checkpoint; meeting notes after the event use the knowledge workflow.
+description: "Prepare an Intgral pre-meeting Draft from the latest authorized docs template and current work evidence. Use before a team or founders meeting to refresh progress, top-down discussion questions and the next checkpoint; meeting notes after the event use the knowledge workflow."
 ---
 
 # Intgral Meeting Prepare
