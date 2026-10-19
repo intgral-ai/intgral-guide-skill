@@ -35,6 +35,14 @@
     "code_repositories": []
   },
   "collaboration_policy": {
+    "meeting_prepare": {
+      "template_documents": {
+        "team": null,
+        "founders": null
+      },
+      "timezone": null,
+      "state_path": null
+    },
     "knowledge_capture": {
       "enabled": null,
       "rules_document": null,

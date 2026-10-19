@@ -15,6 +15,9 @@ PUBLIC_FILES = frozenset({
     'scripts/validate.py', 'tests/test_validate.py',
     '.codex-plugin/plugin.json', '.app.json',
     'skills/intgral-meeting/SKILL.md', 'skills/intgral-meeting/agents/openai.yaml',
+    'skills/intgral-meeting-prepare/SKILL.md',
+    'skills/intgral-meeting-prepare/agents/openai.yaml',
+    'skills/intgral-meeting-prepare/assets/meeting-draft.md',
     'skills/intgral-knowledge-workflow/SKILL.md',
     'skills/intgral-knowledge-workflow/agents/openai.yaml',
     'skills/intgral-knowledge-workflow/references/wispr.md',
@@ -107,7 +110,7 @@ def scan_history(root):
 
 
 def check_workflow_plugin(root):
-    """Keep the canonical workflow, compatibility entry and required apps resolvable."""
+    """Keep workflow skills and required apps resolvable."""
     try:
         manifest = json.loads((root / '.codex-plugin/plugin.json').read_text())
         if (manifest['name'] != 'intgral-knowledge-workflow'
@@ -121,12 +124,17 @@ def check_workflow_plugin(root):
                 or slack['id'] != 'asdk_app_69a1d78e929881919bba0dbda1f6436d'
                 or slack['required'] is not True):
             return ['workflow plugin: Wispr Flow and Slack must be required apps']
-        for name in ('intgral-knowledge-workflow', 'intgral-meeting'):
+        for name in ('intgral-knowledge-workflow', 'intgral-meeting', 'intgral-meeting-prepare'):
             skill = root / 'skills' / name / 'SKILL.md'
+            label = skill.relative_to(root).as_posix()
+            if not skill.is_file():
+                return [f'{label}: missing workflow skill file']
             match = re.match(r'\A---\n(.*?)\n---\n', skill.read_text(), re.DOTALL)
-            fields = dict(line.split(':', 1) for line in match[1].splitlines() if ':' in line) if match else {}
+            if not match:
+                return [f'{label}: missing frontmatter']
+            fields = dict(line.split(':', 1) for line in match[1].splitlines() if ':' in line)
             if fields.get('name', '').strip() != name or not fields.get('description', '').strip():
-                return ['workflow skill: invalid name or description']
+                return [f'{label}: invalid name or description']
     except (OSError, ValueError, KeyError, TypeError):
         return ['workflow plugin: missing or invalid manifest, app dependency or skill']
     return []

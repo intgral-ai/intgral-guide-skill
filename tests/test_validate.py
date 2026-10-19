@@ -37,6 +37,29 @@ class PublicationGuardTests(unittest.TestCase):
         self.assertTrue(findings)
         self.assertNotIn(token, '\n'.join(findings))
 
+    def test_workflow_skill_errors_identify_the_affected_entrypoint(self):
+        source = Path(__file__).resolve().parents[1]
+        for name in ('intgral-knowledge-workflow', 'intgral-meeting', 'intgral-meeting-prepare'):
+            for case in ('missing', 'frontmatter', 'identity'):
+                with self.subTest(name=name, case=case), tempfile.TemporaryDirectory() as directory:
+                    root = Path(directory)
+                    shutil.copytree(source / '.codex-plugin', root / '.codex-plugin')
+                    shutil.copytree(source / 'skills', root / 'skills')
+                    shutil.copyfile(source / '.app.json', root / '.app.json')
+                    skill = root / 'skills' / name / 'SKILL.md'
+                    if case == 'missing':
+                        skill.unlink()
+                    elif case == 'frontmatter':
+                        skill.write_text('# A skill without frontmatter\n')
+                    else:
+                        skill.write_text('---\nname: wrong-entry\ndescription: A test skill\n---\n')
+                    errors = guard.check_workflow_plugin(root)
+                    self.assertEqual(len(errors), 1)
+                    self.assertIn(skill.relative_to(root).as_posix(), errors[0])
+                    self.assertIn({'missing': 'missing workflow skill file',
+                                   'frontmatter': 'missing frontmatter',
+                                   'identity': 'invalid name or description'}[case], errors[0])
+
     def test_personal_path_and_email_are_rejected(self):
         path = '/' + 'Users' + '/example/private-file'
         email = 'person' + '@' + 'example.invalid'

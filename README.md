@@ -6,7 +6,15 @@
 
 调用名：`intgral-guide-skill`。仓库：https://github.com/intgral-ai/intgral-guide-skill。
 
-仓库另含完整的 [intgral-knowledge-workflow](skills/intgral-knowledge-workflow/SKILL.md)，连接 Wispr 会议、早期想法、Decision、docs、更新通知与执行反馈。原 `$intgral-meeting` 保留为兼容入口。
+仓库另含完整的 [intgral-knowledge-workflow](skills/intgral-knowledge-workflow/SKILL.md)，连接 Wispr 会议、早期想法、Decision、docs、更新通知与执行反馈；[intgral-meeting-prepare](skills/intgral-meeting-prepare/SKILL.md) 负责会前 Draft。原 `$intgral-meeting` 保留为兼容入口。
+
+## 会前准备
+
+开会前运行 `$intgral-meeting-prepare`。它会读取 docs 中最新适用模板与本轮工作证据，按“先看结论 → 成员/工作线进展 → 顶层讨论问题 → 下个检查点 → 会中记录”生成或刷新本场 Draft，保留成员编辑、图片和既有记录，并返回实际文档链接。
+
+> 使用 $intgral-meeting-prepare 准备下一次团队会议：按最新模板核对上次会议后的进展，整理要讨论的问题和下个检查点；未确认的范围、负责人、日期和验收标待确认，写入本场 Draft 后给我链接。
+
+私有配置可通过 `collaboration_policy.meeting_prepare.template_documents` 按 Team / Founders 登记实际模板；每次仍读取 live 正文与 revision。模板与草稿的内部链接、客户资料和访问权限留私有系统，公开包只包含通用骨架。此入口按需运行，不创建会前自动化或群发提醒。会后由 knowledge workflow 关联同场纪要。
 
 ## Knowledge workflow 与接入
 
@@ -14,7 +22,7 @@
 
 Slack 是成员的日常工作入口：召唤已接入的 agent 完成查询、讨论、小改动与确认，在原线程交付；需留存的决定更新已有记录，复杂研究/方案/长任务才在 docs 维护工作稿，指令与进度仍留 Slack。明确决定与写入授权可同条完成；实际召唤入口须单独绑定与验收，插件安装不等于已部署监听。交互、权限、回执与恢复见 [Slack 操作规范](skills/intgral-knowledge-workflow/references/slack-interface.md)。纯 Slack/docs 请求只检查所需能力，引用 Wispr 时再核验 Wispr。
 
-普通 skill 安装：使用 skill-installer 从本仓库已合并的 main 安装 `skills/intgral-knowledge-workflow`；需要原提示词兼容时同时安装 `skills/intgral-meeting`。插件包同时包含两个入口，并声明官方 Wispr Flow 与 Slack 为必需 app；成员仍须使用自己的账号授权。插件名升级为 intgral-knowledge-workflow，既有插件安装不等于新版已安装。
+普通 skill 安装：使用 skill-installer 从本仓库已合并的 main 安装 `skills/intgral-knowledge-workflow`；会前准备同时安装 `skills/intgral-meeting-prepare`，需要原提示词兼容时同时安装 `skills/intgral-meeting`。插件包包含这三个入口，并声明官方 Wispr Flow 与 Slack 为必需 app；成员仍须使用自己的账号授权。插件名为 intgral-knowledge-workflow，既有插件安装不等于新版已安装。
 
 调用示例：
 
