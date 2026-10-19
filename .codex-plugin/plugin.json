@@ -1,7 +1,7 @@
 {
   "name": "intgral-knowledge-workflow",
-  "version": "0.3.0",
-  "description": "Reconcile evidence, pending decisions, verified documents and audience-safe updates on every cycle.",
+  "version": "0.4.0",
+  "description": "Prepare meeting drafts and reconcile evidence, pending decisions, verified documents and audience-safe updates.",
   "author": { "name": "Intgral" },
   "license": "MIT",
   "repository": "https://github.com/intgral-ai/intgral-guide-skill",

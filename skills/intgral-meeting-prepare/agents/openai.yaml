@@ -1,0 +1,4 @@
+interface:
+  display_name: "Intgral Meeting Prepare"
+  short_description: "会前读取最新模板与有关进展，生成区分事实、建议和待确认的会议草稿"
+  default_prompt: "使用 $intgral-meeting-prepare 准备这次会议：按最新授权模板核对有关进展和待确认问题，从顶层整理 Draft，保留人工补充，写入后返回链接。"

@@ -21,6 +21,8 @@ Slack 是日常工作入口，成员在线程召唤 agent 提问、讨论、确�
 
 ## 每轮执行
 
+会前准备或刷新 Draft 时，转到 [intgral-meeting-prepare](../intgral-meeting-prepare/SKILL.md)，沿用本流程的 Decision 与权限规则；会后关联同场纪要，不重建或覆盖会前人工记录。
+
 1. **先核对 Decision。** 在授权范围内读取已登记线程的新回复、确认、更正、未结事项及新的人工作业提交，分页读全；Team 运行器只读取经过授权的 Team 投影，不读取私密 founders 频道。记录实际读取范围、截止时间和不可读项。Decision 暂不可用时仍可保存同权限来源草稿；会改变承诺或扩大受众的发布保持 pending。
 2. **读取增量来源。** 包括 Wispr meetings、My thoughts、scratchpad，以及已登记 docs 的人工或自动修订；按 [wispr.md](references/wispr.md) 分别完整读取。会议同步先按 [meeting-routing.md](references/meeting-routing.md) 核对实际来源分类和目标：Team 纪要进入配置的全员 Meeting，Founders 会议进入配置的私有 Meeting，个人 thoughts 仅 owner 可见；未知或冲突保持 owner-only pending。
 3. **归档并更新主题。** 会议按日期→主题，想法按稳定主题。已有常设授权且分类、权限通过的 Team 纪要直接增量同步，无须逐场重复审批；Founders 向 Team 转出仍核对具体版本批准。保留人工内容和有效决定，来源修订只更新来源区，不用自动 summary 覆盖人工确认。具体写回与失败续办见 [archive.md](references/archive.md)。
