@@ -68,10 +68,25 @@ class PublicationGuardTests(unittest.TestCase):
             (root / 'assets').mkdir()
             source = Path(__file__).resolve().parents[1] / 'assets/team-context.example.json'
             example = json.loads(source.read_text())
-            example['local_indexes']['documentation'] = 'workspace/' + 'private-doc-index.json'
+            example.setdefault('local_indexes', {})['documentation'] = 'workspace/' + 'private-doc-index.json'
             (root / 'assets/team-context.example.json').write_text(json.dumps(example))
             errors = guard.validate(root)
             self.assertTrue(any('must contain no real team assignments or internal sources' in e for e in errors))
+
+    def test_example_rejects_missing_or_malformed_local_indexes(self):
+        source = Path(__file__).resolve().parents[1] / 'assets/team-context.example.json'
+        for case in ('missing', None, [], 'not-an-index-map', False):
+            with self.subTest(case=case), tempfile.TemporaryDirectory() as directory:
+                root = Path(directory)
+                (root / 'assets').mkdir()
+                example = json.loads(source.read_text())
+                if case == 'missing':
+                    example.pop('local_indexes')
+                else:
+                    example['local_indexes'] = case
+                (root / 'assets/team-context.example.json').write_text(json.dumps(example))
+                errors = guard.validate(root)
+                self.assertTrue(any('must contain no real team assignments or internal sources' in e for e in errors))
 
     def test_symlink_cannot_import_external_content(self):
         with tempfile.TemporaryDirectory() as directory:
