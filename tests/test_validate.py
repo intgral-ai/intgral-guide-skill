@@ -12,21 +12,24 @@ spec.loader.exec_module(guard)
 
 
 class PublicationGuardTests(unittest.TestCase):
-    def test_meeting_package_resolves_required_wispr_app(self):
+    def test_workflow_package_resolves_both_apps_and_entrypoints(self):
         root = Path(__file__).resolve().parents[1]
-        self.assertEqual(guard.check_meeting_plugin(root), [])
+        self.assertEqual(guard.check_workflow_plugin(root), [])
 
-    def test_meeting_package_rejects_missing_or_optional_dependency(self):
+    def test_workflow_package_rejects_missing_or_optional_dependency(self):
         source = Path(__file__).resolve().parents[1]
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             shutil.copytree(source / '.codex-plugin', root / '.codex-plugin')
             shutil.copytree(source / 'skills', root / 'skills')
-            self.assertTrue(guard.check_meeting_plugin(root))
+            self.assertEqual(guard.check_workflow_plugin(root),
+                             ['workflow plugin: missing or invalid manifest, app dependency or skill'])
             dependency = {'apps': {'app-6a5ae9736be0819199d06d61ac171080': {
-                'id': 'asdk_app_6a5ae9736be0819199d06d61ac171080', 'required': False}}}
+                'id': 'asdk_app_6a5ae9736be0819199d06d61ac171080', 'required': False},
+                'slack': {'id': 'asdk_app_69a1d78e929881919bba0dbda1f6436d', 'required': True}}}
             (root / '.app.json').write_text(json.dumps(dependency))
-            self.assertTrue(guard.check_meeting_plugin(root))
+            self.assertEqual(guard.check_workflow_plugin(root),
+                             ['workflow plugin: Wispr Flow and Slack must be required apps'])
 
     def test_detects_token_without_echoing_it(self):
         token = 'ghp_' + 'a' * 36

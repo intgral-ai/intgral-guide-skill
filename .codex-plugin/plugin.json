@@ -1,7 +1,7 @@
 {
-  "name": "intgral-meeting",
-  "version": "0.1.0",
-  "description": "Archive Wispr meetings and thoughts, and reconcile requested product, MVP and engineering updates.",
+  "name": "intgral-knowledge-workflow",
+  "version": "0.3.0",
+  "description": "Reconcile evidence, pending decisions, verified documents and audience-safe updates on every cycle.",
   "author": { "name": "Intgral" },
   "license": "MIT",
   "repository": "https://github.com/intgral-ai/intgral-guide-skill",
